@@ -1,11 +1,11 @@
 ### Kubernetes setup using Kubeadm
 
-#Introduction
+# Introduction
 - Kubernetes is a container orchestration system that manages containers at scale. Initially developed by Google based on its experience running containers in production, Kubernetes is open source and actively developed by a community around the world.
 
 - Kubeadm automates the installation and configuration of Kubernetes components such as the API server, Controller Manager, and Kube DNS. It does not, however, create users or handle the installation of operating system level dependencies and their configuration. Using these tools makes creating additional clusters or recreating existing clusters much simpler and less error prone.
 
-#Prepare the VM
+# Prepare the VM
 
 - Change to root:
 ```sh
@@ -20,7 +20,7 @@ swapoff -a
 ```sh
 apt update && apt upgrade
 ```
-#Install Docker
+# Install Docker
 - Remove old docker installations
 ```sh
 apt-get remove docker docker-engine docker.io
@@ -56,7 +56,7 @@ apt-cache madison docker-ce
 apt-get install docker-ce=17.03.2~ce-0~ubuntu-xenial
 ```
 
-#Install kubeadm, kubectl and kubeproxy
+# Install kubeadm, kubectl and kubeproxy
 
 ```sh
 apt-get update \
@@ -75,7 +75,7 @@ apt-get update \
   kubernetes-cni
 ```
 
-#Cluster initialization 
+# Cluster initialization 
  > Replace Ip address in the below command
 
 ```sh
@@ -92,7 +92,7 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-#Networking
+# Networking
 
 - This is a place, when things start to be more complicated. Kubernetes is built with extensibility in mind, this is why there are always a lot of options. If you are not sure which network addon to use, use flannel. Flannel is a very simple overlay network that satisfies the Kubernetes requirements. Many people have reported success with Flannel and Kubernetes.
 
@@ -100,7 +100,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 `kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml`
 
-#Join your nodes to your Kubernetes cluster
+# Join your nodes to your Kubernetes cluster
 
 - Repeat the above steps until cluster initialization
 - Execute join command that is obtained after cluster initialization on worker node 
@@ -108,7 +108,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```sh
 kubeadm join --token 702ff6.bc7aacff7aacab17 174.138.15.158:6443 --discovery-token-ca-cert-hash sha256:68bc22d2c631800fd358a6d7e3998e598deb2980ee613b3c2f1da8978960c8ab
 ```
-#References:
+# References:
   
   1. https://docs.docker.com/install/linux/docker-ce/ubuntu/
   2. https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.10.md#v1105  
